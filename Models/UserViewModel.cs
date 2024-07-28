@@ -16,7 +16,7 @@ public class User
     [Required]
     public string Username { get; set; }
 
-    public string ShippingAddress { get; set; }
+    public string? ShippingAddress { get; set; }
 
-    public List<Order> PurchaseHistory { get; set; }
+    public List<string>? PurchaseHistory { get; set; }
 }

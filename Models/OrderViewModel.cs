@@ -9,6 +9,6 @@ public class Order
     public User User { get; set; }
     [Required]
     public List<Product> Products { get; set; }
-    public decimal TotalCost { get; set; }
-    public DateTime Date { get; set; }
+    public decimal? TotalCost { get; set; }
+    public DateTime? Date { get; set; }
 }

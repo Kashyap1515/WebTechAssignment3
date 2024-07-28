@@ -8,7 +8,7 @@ public class Product
     [Required]
     public string Description { get; set; }
 
-    public string Image { get; set; }
+    public string? Image { get; set; }
 
     [Required]
     public decimal Pricing { get; set; }

@@ -9,8 +9,8 @@ public class Comment
     public Product Product { get; set; }
     [Required]
     public User User { get; set; }
-    public int Rating { get; set; }
-    public string Image { get; set; }
+    public int? Rating { get; set; }
+    public string? Image { get; set; }
     [Required]
     public string Text { get; set; }
 }
