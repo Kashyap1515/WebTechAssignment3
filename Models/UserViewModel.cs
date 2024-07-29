@@ -18,5 +18,5 @@ public class User
 
     public string? ShippingAddress { get; set; }
 
-    public List<string>? PurchaseHistory { get; set; }
+    public string? PurchaseHistory { get; set; }
 }

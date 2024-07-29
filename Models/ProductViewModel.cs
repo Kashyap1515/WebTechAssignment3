@@ -15,3 +15,14 @@ public class Product
 
     public decimal ShippingCost { get; set; }
 }
+
+public class ProductItem
+{
+    [Key]
+    public int Id { get; set; }
+
+    [Required]
+    public int ProductId { get; set; }
+    public int Quanity { get; set; }
+}
+

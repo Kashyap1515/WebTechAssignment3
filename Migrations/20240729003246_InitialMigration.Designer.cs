@@ -11,7 +11,7 @@ using assignment3.Data;
 namespace assignment3.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240728220633_InitialMigration")]
+    [Migration("20240729003246_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -23,6 +23,10 @@ namespace assignment3.Migrations
             modelBuilder.Entity("assignment3.Models.Cart", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -33,10 +37,14 @@ namespace assignment3.Migrations
             modelBuilder.Entity("assignment3.Models.Comment", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Image")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("Rating")
                         .HasColumnType("INTEGER");
@@ -44,6 +52,9 @@ namespace assignment3.Migrations
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -53,6 +64,7 @@ namespace assignment3.Migrations
             modelBuilder.Entity("assignment3.Models.Order", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("Date")
@@ -60,6 +72,9 @@ namespace assignment3.Migrations
 
                     b.Property<decimal?>("TotalCost")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -72,18 +87,12 @@ namespace assignment3.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("CartId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Image")
                         .HasColumnType("TEXT");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("INTEGER");
 
                     b.Property<decimal>("Pricing")
                         .HasColumnType("TEXT");
@@ -93,11 +102,34 @@ namespace assignment3.Migrations
 
                     b.HasKey("Id");
 
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("assignment3.Models.ProductItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("CartId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quanity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
                     b.HasIndex("CartId");
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("Products");
+                    b.ToTable("ProductItems");
                 });
 
             modelBuilder.Entity("assignment3.Models.User", b =>
@@ -129,56 +161,17 @@ namespace assignment3.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("assignment3.Models.Cart", b =>
-                {
-                    b.HasOne("assignment3.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("assignment3.Models.Comment", b =>
-                {
-                    b.HasOne("assignment3.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("assignment3.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("assignment3.Models.Order", b =>
-                {
-                    b.HasOne("assignment3.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("assignment3.Models.Product", b =>
+            modelBuilder.Entity("assignment3.Models.ProductItem", b =>
                 {
                     b.HasOne("assignment3.Models.Cart", null)
                         .WithMany("Products")
-                        .HasForeignKey("CartId");
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("assignment3.Models.Order", null)
                         .WithMany("Products")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("assignment3.Models.Cart", b =>

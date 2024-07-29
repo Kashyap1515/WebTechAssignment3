@@ -11,7 +11,7 @@ using assignment3.Models;
 namespace assignment3.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class CommentController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

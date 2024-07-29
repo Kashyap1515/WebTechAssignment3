@@ -14,28 +14,21 @@ namespace assignment3.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<ProductItem> ProductItems { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Comment>()
-                .HasOne(c => c.Product)
-                .WithMany()
-                .HasForeignKey(c => c.Id);
-
-            modelBuilder.Entity<Comment>()
-                .HasOne(c => c.User)
-                .WithMany()
-                .HasForeignKey(c => c.Id);
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Cart>()
-                .HasOne(c => c.User)
-                .WithMany()
-                .HasForeignKey(c => c.Id);
+                .HasMany(c => c.Products)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Order>()
-                .HasOne(o => o.User)
-                .WithMany()
-                .HasForeignKey(o => o.Id);
+                .HasMany(c => c.Products)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -6,9 +6,9 @@ public class Order
     [Key]
     public int Id { get; set; }
     [Required]
-    public User User { get; set; }
+    public int UserId { get; set; }
     [Required]
-    public List<Product> Products { get; set; }
+    public List<ProductItem> Products { get; set; }
     public decimal? TotalCost { get; set; }
     public DateTime? Date { get; set; }
 }

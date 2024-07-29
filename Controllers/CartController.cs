@@ -11,7 +11,7 @@ using assignment3.Models;
 namespace assignment3.Controllers
 {
      [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class CartController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -25,7 +25,7 @@ namespace assignment3.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var carts = await _context.Carts.ToListAsync();
+            var carts = await _context.Carts.Include(c => c.Products).ToListAsync();
             return Ok(carts);
         }
 
